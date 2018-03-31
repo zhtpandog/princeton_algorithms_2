@@ -10,18 +10,21 @@ import java.util.HashMap;
 
 public class WordNet {
 
+    private HashMap<String, ArrayList<Integer>> nounSynsetsMap;
+    private HashMap<Integer, int[]> graphAdjList;
+    private int numVertices;
+    private int numEdges;
+
     // constructor takes the name of the two input files
     public WordNet(String synsets, String hypernyms) {
 
-        // Build the HashMap for synsets lookup. Key(String) is word, value(ArrayList<Integer>) is wordId in synsets
-        int numRecords = 0;
+        // Build the nounSynsetsMap(HashMap) for synsets lookup. Key(String) is word, value(ArrayList<Integer>) is wordId in synsets
         In nounSynsetsIn = new In(synsets);
-        HashMap<String, ArrayList<Integer>> nounSynsetsMap = new HashMap<>();
+        nounSynsetsMap = new HashMap<>();
         while (nounSynsetsIn.hasNextLine()) {
-            numRecords++;
             String[] synsetRecord = nounSynsetsIn.readLine().split(",");
             int wordId = Integer.parseInt(synsetRecord[0]);
-            for (String word: synsetRecord[1].split(" ")) {
+            for (String word : synsetRecord[1].split(" ")) {
                 if (nounSynsetsMap.containsKey(word)) {
                     nounSynsetsMap.get(word).add(wordId);
                 } else {
@@ -30,12 +33,9 @@ public class WordNet {
             }
         }
 
-//        StdOut.println(numRecords);
-
-        // build the adjacency list
-        int numVertices;
-        int numEdges = 0;
-        HashMap<Integer, int[]> graphAdjList = new HashMap<>();
+        // build the adjacency list graphAdjList
+        numEdges = 0;
+        graphAdjList = new HashMap<>();
         In hypernymsIn = new In(hypernyms);
         while (hypernymsIn.hasNextLine()) {
             String[] hypernymRelation = hypernymsIn.readLine().split(",");
@@ -50,31 +50,20 @@ public class WordNet {
 
         numVertices = graphAdjList.size();
 
-//        StdOut.println(numVertices);
-//        StdOut.println(numEdges);
-//
-//        int cnt = 0;
-//        for(HashMap.Entry<Integer, int[]> entry: graphAdjList.entrySet()) {
-//            System.out.println(entry.getKey() + " : "  + Arrays.toString(entry.getValue()));
-//            cnt++;
-//            if (cnt > 10) {
-//                break;
-//            }
-//        }
-
     }
 
-//    // returns all WordNet nouns
-//    public Iterable<String> nouns() {
-//
-//    }
-//
-//    // is the word a WordNet noun?
-//    public boolean isNoun(String word) {
-//
-//    }
-//
+    // returns all WordNet nouns
+    public Iterable<String> nouns() {
+        return nounSynsetsMap.keySet();
+    }
+
+    // is the word a WordNet noun?
+    public boolean isNoun(String word) {
+        return nounSynsetsMap.containsKey(word);
+    }
+
 //    // distance between nounA and nounB (defined below)
+//    //  minimum length of any ancestral path between any synset v of A and any synset w of B
 //    public int distance(String nounA, String nounB) {
 //
 //    }
