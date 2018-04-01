@@ -4,15 +4,15 @@ import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-import java.util.HashMap;
-
 public class SAP {
 
     private Digraph graph;
-    private int minLength;
-    private int minAncestor;
+    private int minLength, minAncestor;
+    private int minLengthIter, minAncestorIter;
     private int currV = -1, currW = -1;
+    private Iterable<Integer> currVIter = null, currWIter = null;
     private BreadthFirstDirectedPaths bfsV, bfsW;
+    private BreadthFirstDirectedPaths bfsVIter, bfsWIter;
 
     // constructor takes a digraph (not necessarily a DAG)
     public SAP(Digraph G) {
@@ -94,15 +94,83 @@ public class SAP {
         return minAncestor;
     }
 
-//    // length of shortest ancestral path between any vertex in v and any vertex in w; -1 if no such path
-//    public int length(Iterable<Integer> v, Iterable<Integer> w) {
-//
-//    }
-//
-//    // a common ancestor that participates in shortest ancestral path; -1 if no such path
-//    public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
-//
-//    }
+    // length of shortest ancestral path between any vertex in v and any vertex in w; -1 if no such path
+    public int length(Iterable<Integer> v, Iterable<Integer> w) {
+
+        boolean flag = false;
+
+        if (v != currVIter) {
+            bfsVIter = new BreadthFirstDirectedPaths(graph, v);
+            currVIter = v;
+            flag = true;
+        }
+        if (w != currWIter) {
+            bfsWIter = new BreadthFirstDirectedPaths(graph, w);
+            currWIter = w;
+            flag = true;
+        }
+
+        // find all vertices that v can reach and associated distance
+        if (flag) {
+            int minDist = Integer.MAX_VALUE;
+            int lowestAncestor = -1;
+            for (int ver = 0; ver < graph.V(); ver++) {
+                if (bfsVIter.hasPathTo(ver) && bfsWIter.hasPathTo(ver)) {
+                    int dist = bfsVIter.distTo(ver) + bfsWIter.distTo(ver);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        lowestAncestor = ver;
+                    }
+                }
+            }
+
+            minAncestorIter = lowestAncestor;
+            if (lowestAncestor == -1) minLengthIter = -1;
+            else minLengthIter = minDist;
+        }
+
+        return minLengthIter;
+
+    }
+
+    // a common ancestor that participates in shortest ancestral path; -1 if no such path
+    public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
+
+        boolean flag = false;
+
+        if (v != currVIter) {
+            bfsVIter = new BreadthFirstDirectedPaths(graph, v);
+            currVIter = v;
+            flag = true;
+        }
+        if (w != currWIter) {
+            bfsWIter = new BreadthFirstDirectedPaths(graph, w);
+            currWIter = w;
+            flag = true;
+        }
+
+        // find all vertices that v can reach and associated distance
+        if (flag) {
+            int minDist = Integer.MAX_VALUE;
+            int lowestAncestor = -1;
+            for (int ver = 0; ver < graph.V(); ver++) {
+                if (bfsVIter.hasPathTo(ver) && bfsWIter.hasPathTo(ver)) {
+                    int dist = bfsVIter.distTo(ver) + bfsWIter.distTo(ver);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        lowestAncestor = ver;
+                    }
+                }
+            }
+
+            minAncestorIter = lowestAncestor;
+            if (lowestAncestor == -1) minLengthIter = -1;
+            else minLengthIter = minDist;
+        }
+
+        return minAncestorIter;
+
+    }
 
     // do unit testing of this class
     public static void main(String[] args) {

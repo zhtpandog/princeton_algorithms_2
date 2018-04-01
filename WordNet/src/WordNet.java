@@ -2,7 +2,9 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,9 +13,11 @@ import java.util.HashMap;
 public class WordNet {
 
     private HashMap<String, ArrayList<Integer>> nounSynsetsMap;
-    private HashMap<Integer, int[]> graphAdjList;
-    private int numVertices;
-    private int numEdges;
+    private HashMap<Integer, String> nounSynsetsIdMap;
+    private Digraph graph;
+    private BreadthFirstDirectedPaths bfsVIter, bfsWIter;
+    private Iterable<Integer> currVIter = null, currWIter = null;
+    private int minLengthIter, minAncestorIter;
 
     // constructor takes the name of the two input files
     public WordNet(String synsets, String hypernyms) {
@@ -21,34 +25,40 @@ public class WordNet {
         // Build the nounSynsetsMap(HashMap) for synsets lookup. Key(String) is word, value(ArrayList<Integer>) is wordId in synsets
         In nounSynsetsIn = new In(synsets);
         nounSynsetsMap = new HashMap<>();
+        nounSynsetsIdMap = new HashMap<>();
         while (nounSynsetsIn.hasNextLine()) {
             String[] synsetRecord = nounSynsetsIn.readLine().split(",");
-            int wordId = Integer.parseInt(synsetRecord[0]);
-            for (String word : synsetRecord[1].split(" ")) {
-                if (nounSynsetsMap.containsKey(word)) {
-                    nounSynsetsMap.get(word).add(wordId);
-                } else {
-                    nounSynsetsMap.put(word, new ArrayList<>(Collections.singletonList(wordId)));
-                }
+            int synsetId = Integer.parseInt(synsetRecord[0]);
+            String synsetStr = synsetRecord[1];
+            nounSynsetsIdMap.put(synsetId, synsetStr);
+            if (nounSynsetsMap.containsKey(synsetStr)) {
+                nounSynsetsMap.get(synsetStr).add(synsetId);
+            } else {
+                nounSynsetsMap.put(synsetStr, new ArrayList<>(Collections.singletonList(synsetId)));
             }
         }
 
+        int numVertices = nounSynsetsIdMap.size();
+
         // build the adjacency list graphAdjList
-        numEdges = 0;
-        graphAdjList = new HashMap<>();
+        ArrayList<ArrayList<Integer>> graphAdjList = new ArrayList<>();
         In hypernymsIn = new In(hypernyms);
         while (hypernymsIn.hasNextLine()) {
             String[] hypernymRelation = hypernymsIn.readLine().split(",");
-            int node = Integer.parseInt(hypernymRelation[0]);
-            int[] neighbors = new int[hypernymRelation.length - 1];
-            for (int i = 0; i < neighbors.length; i++) {
-                neighbors[i] = Integer.parseInt(hypernymRelation[i + 1]);
-                numEdges++;
+            ArrayList<Integer> neighbors = new ArrayList<>(); // nodes that "pointed to", aka hypernym
+            for (int i = 1; i < hypernymRelation.length; i++) {
+                neighbors.add(Integer.parseInt(hypernymRelation[i]));
             }
-            graphAdjList.put(node, neighbors);
+            graphAdjList.add(neighbors);
         }
 
-        numVertices = graphAdjList.size();
+        // create directed graph called graph
+        graph = new Digraph(numVertices);
+        for (int i = 0; i < numVertices; i++) {
+            for (int id: graphAdjList.get(i)) {
+                graph.addEdge(i, id);
+            }
+        }
 
     }
 
@@ -62,20 +72,99 @@ public class WordNet {
         return nounSynsetsMap.containsKey(word);
     }
 
-//    // distance between nounA and nounB (defined below)
-//    //  minimum length of any ancestral path between any synset v of A and any synset w of B
-//    public int distance(String nounA, String nounB) {
-//
-//    }
-//
-//    // a synset (second field of synsets.txt) that is the common ancestor of nounA and nounB
-//    // in a shortest ancestral path (defined below)
-//    public String sap(String nounA, String nounB) {
-//
-//    }
+    // distance between nounA and nounB (defined below)
+    //  minimum length of any ancestral path between any synset v of A and any synset w of B
+    public int distance(String nounA, String nounB) {
+        // retrieve id list associated with nounA, nounB
+        ArrayList<Integer> idListA = nounSynsetsMap.get(nounA);
+        ArrayList<Integer> idListB = nounSynsetsMap.get(nounB);
+
+//        StdOut.println(Arrays.toString(idListA.toArray()));
+//        StdOut.println(Arrays.toString(idListB.toArray()));
+
+        boolean flag = false;
+
+        if (idListA != currVIter) {
+            bfsVIter = new BreadthFirstDirectedPaths(graph, idListA);
+            currVIter = idListA;
+            flag = true;
+        }
+        if (idListB != currWIter) {
+            bfsWIter = new BreadthFirstDirectedPaths(graph, idListB);
+            currWIter = idListB;
+            flag = true;
+        }
+
+        // find all vertices that v can reach and associated distance
+        if (flag) {
+            int minDist = Integer.MAX_VALUE;
+            int lowestAncestor = -1;
+            for (int ver = 0; ver < graph.V(); ver++) {
+                if (bfsVIter.hasPathTo(ver) && bfsWIter.hasPathTo(ver)) {
+                    int dist = bfsVIter.distTo(ver) + bfsWIter.distTo(ver);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        lowestAncestor = ver;
+                    }
+                }
+            }
+
+            minAncestorIter = lowestAncestor;
+            if (lowestAncestor == -1) minLengthIter = -1;
+            else minLengthIter = minDist;
+        }
+
+        return minLengthIter;
+
+    }
+
+    // a synset (second field of synsets.txt) that is the common ancestor of nounA and nounB
+    // in a shortest ancestral path (defined below)
+    public String sap(String nounA, String nounB) {
+        // retrieve id list associated with nounA, nounB
+        ArrayList<Integer> idListA = nounSynsetsMap.get(nounA);
+        ArrayList<Integer> idListB = nounSynsetsMap.get(nounB);
+
+        boolean flag = false;
+
+        if (idListA != currVIter) {
+            bfsVIter = new BreadthFirstDirectedPaths(graph, idListA);
+            currVIter = idListA;
+            flag = true;
+        }
+        if (idListB != currWIter) {
+            bfsWIter = new BreadthFirstDirectedPaths(graph, idListB);
+            currWIter = idListB;
+            flag = true;
+        }
+
+        // find all vertices that v can reach and associated distance
+        if (flag) {
+            int minDist = Integer.MAX_VALUE;
+            int lowestAncestor = -1;
+            for (int ver = 0; ver < graph.V(); ver++) {
+                if (bfsVIter.hasPathTo(ver) && bfsWIter.hasPathTo(ver)) {
+                    int dist = bfsVIter.distTo(ver) + bfsWIter.distTo(ver);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        lowestAncestor = ver;
+                    }
+                }
+            }
+
+            minAncestorIter = lowestAncestor;
+            if (lowestAncestor == -1) minLengthIter = -1;
+            else minLengthIter = minDist;
+        }
+
+        return nounSynsetsIdMap.get(minAncestorIter);
+
+    }
 
     // do unit testing of this class
     public static void main(String[] args) {
         WordNet wn = new WordNet("wordnet/synsets.txt", "wordnet/hypernyms.txt");
+        StdOut.println(wn.distance("Aberdeen", "word"));
+        StdOut.println(wn.sap("Aberdeen", "word"));
     }
 }
