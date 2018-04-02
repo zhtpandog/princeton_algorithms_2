@@ -6,6 +6,7 @@ import edu.princeton.cs.algs4.DirectedCycle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 public class WordNet {
 
@@ -40,27 +41,42 @@ public class WordNet {
         int numVertices = nounSynsetsIdMap.size();
 
         // build the adjacency list graphAdjList
-        ArrayList<ArrayList<Integer>> graphAdjList = new ArrayList<>();
+//        ArrayList<ArrayList<Integer>> graphAdjList = new ArrayList<>();
+        HashMap<Integer, ArrayList<Integer>> graphAdjList= new HashMap<>();
+
         In hypernymsIn = new In(hypernyms);
         while (hypernymsIn.hasNextLine()) {
             String[] hypernymRelation = hypernymsIn.readLine().split(",");
+            int from = Integer.parseInt(hypernymRelation[0]);
             ArrayList<Integer> neighbors = new ArrayList<>(); // nodes that "pointed to", aka hypernym
             for (int i = 1; i < hypernymRelation.length; i++) {
                 neighbors.add(Integer.parseInt(hypernymRelation[i]));
             }
-            graphAdjList.add(neighbors);
+            graphAdjList.put(from, neighbors);
         }
+
+//        // validate graphAdjList
+//        for (Map.Entry<Integer, ArrayList<Integer>> entry: graphAdjList.entrySet()) {
+//            System.out.print(entry.getKey() + ": ");
+//            for (int j: entry.getValue()) {
+//                System.out.print(j + " ");
+//            }
+//            System.out.println();
+//        }
 
         // create directed graph called graph
         graph = new Digraph(numVertices);
-        for (int i = 0; i < numVertices; i++) {
-            for (int id: graphAdjList.get(i)) {
-                graph.addEdge(i, id);
+        for (Map.Entry<Integer, ArrayList<Integer>> entry: graphAdjList.entrySet()) {
+            int origin = entry.getKey();
+            for (int dest: entry.getValue()) {
+                graph.addEdge(origin, dest);
             }
         }
 
         // validate this is a rooted graph
         DirectedCycle dc = new DirectedCycle(graph);
+//        System.out.println(dc.hasCycle());
+//        for (int i: dc.cycle()) System.out.println(i);
         if (dc.hasCycle()) throw new java.lang.IllegalArgumentException();
 
 //        boolean rooted = false;
@@ -179,8 +195,8 @@ public class WordNet {
 
     // do unit testing of this class
     public static void main(String[] args) {
-//        WordNet wn = new WordNet("wordnet/synsets.txt", "wordnet/hypernyms.txt");
-//        StdOut.println(wn.distance("Aberdeen", "word"));
-//        StdOut.println(wn.sap("Aberdeen", "word"));
+//        WordNet wn = new WordNet("wordnet/synsets15.txt", "wordnet/hypernyms15Tree.txt");
+//        StdOut.println(wn.distance("b", "f"));
+//        StdOut.println(wn.sap("b", "f"));
     }
 }

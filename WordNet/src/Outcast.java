@@ -1,8 +1,6 @@
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.In;
 
-import java.util.HashMap;
-
 public class Outcast {
 
     private final WordNet wn;

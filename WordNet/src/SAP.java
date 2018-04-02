@@ -20,6 +20,16 @@ public class SAP {
         graph = G;
     }
 
+    /*
+    // copy constructor to make SAP immutable
+    SAP(SAP sap) {
+        graph = sap.graph;
+        minLength = sap.minLength;
+        minAncestor = sap.minAncestor;
+
+    }
+    */
+
     // length of shortest ancestral path between v and w; -1 if no such path
     public int length(int v, int w) {
         if ((v > graph.V() - 1 || v < 0) || (w > graph.V() - 1 || w < 0)) throw new java.lang.IllegalArgumentException();
