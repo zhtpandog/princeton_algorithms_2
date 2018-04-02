@@ -1,12 +1,8 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Digraph;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -21,6 +17,7 @@ public class WordNet {
 
     // constructor takes the name of the two input files
     public WordNet(String synsets, String hypernyms) {
+        if (synsets == null || hypernyms == null) throw new java.lang.IllegalArgumentException();
 
         // Build the nounSynsetsMap(HashMap) for synsets lookup. Key(String) is word, value(ArrayList<Integer>) is wordId in synsets
         In nounSynsetsIn = new In(synsets);
@@ -29,12 +26,13 @@ public class WordNet {
         while (nounSynsetsIn.hasNextLine()) {
             String[] synsetRecord = nounSynsetsIn.readLine().split(",");
             int synsetId = Integer.parseInt(synsetRecord[0]);
+
             String synsetStr = synsetRecord[1];
             nounSynsetsIdMap.put(synsetId, synsetStr);
-            if (nounSynsetsMap.containsKey(synsetStr)) {
-                nounSynsetsMap.get(synsetStr).add(synsetId);
-            } else {
-                nounSynsetsMap.put(synsetStr, new ArrayList<>(Collections.singletonList(synsetId)));
+
+            for (String word: synsetRecord[1].split(" ")) {
+                if (nounSynsetsMap.containsKey(word)) nounSynsetsMap.get(word).add(synsetId);
+                else nounSynsetsMap.put(word, new ArrayList<>(Collections.singletonList(synsetId)));
             }
         }
 
@@ -59,6 +57,17 @@ public class WordNet {
                 graph.addEdge(i, id);
             }
         }
+
+        // validate this is a rooted graph
+        boolean rooted = false;
+        for (int ver = 0; ver < graph.V(); ver++) {
+            if (graph.indegree(ver) == 0) {
+                rooted = true;
+                break;
+            }
+        }
+        if (!rooted) throw new java.lang.IllegalArgumentException();
+
     }
 
     // returns all WordNet nouns
@@ -68,18 +77,19 @@ public class WordNet {
 
     // is the word a WordNet noun?
     public boolean isNoun(String word) {
+        if (word == null) throw new java.lang.IllegalArgumentException();
         return nounSynsetsMap.containsKey(word);
     }
 
     // distance between nounA and nounB (defined below)
     // minimum length of any ancestral path between any synset v of A and any synset w of B
     public int distance(String nounA, String nounB) {
+        if (nounA == null || nounB == null) throw new java.lang.IllegalArgumentException();
+        if (!isNoun(nounA) || !isNoun(nounB)) throw new java.lang.IllegalArgumentException();
+
         // retrieve id list associated with nounA, nounB
         ArrayList<Integer> idListA = nounSynsetsMap.get(nounA);
         ArrayList<Integer> idListB = nounSynsetsMap.get(nounB);
-
-//        StdOut.println(Arrays.toString(idListA.toArray()));
-//        StdOut.println(Arrays.toString(idListB.toArray()));
 
         boolean flag = false;
 
@@ -120,6 +130,9 @@ public class WordNet {
     // a synset (second field of synsets.txt) that is the common ancestor of nounA and nounB
     // in a shortest ancestral path (defined below)
     public String sap(String nounA, String nounB) {
+        if (nounA == null || nounB == null) throw new java.lang.IllegalArgumentException();
+        if (!isNoun(nounA) || !isNoun(nounB)) throw new java.lang.IllegalArgumentException();
+
         // retrieve id list associated with nounA, nounB
         ArrayList<Integer> idListA = nounSynsetsMap.get(nounA);
         ArrayList<Integer> idListB = nounSynsetsMap.get(nounB);
@@ -162,8 +175,8 @@ public class WordNet {
 
     // do unit testing of this class
     public static void main(String[] args) {
-        WordNet wn = new WordNet("wordnet/synsets.txt", "wordnet/hypernyms.txt");
-        StdOut.println(wn.distance("Aberdeen", "word"));
-        StdOut.println(wn.sap("Aberdeen", "word"));
+//        WordNet wn = new WordNet("wordnet/synsets.txt", "wordnet/hypernyms.txt");
+//        StdOut.println(wn.distance("Aberdeen", "word"));
+//        StdOut.println(wn.sap("Aberdeen", "word"));
     }
 }

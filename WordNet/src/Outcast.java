@@ -1,27 +1,26 @@
-import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
-import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.HashMap;
 
 public class Outcast {
 
-    WordNet wn;
+    private WordNet wn;
 
     // constructor takes a WordNet object
     public Outcast(WordNet wordnet) {
+        if (wordnet == null) throw new java.lang.IllegalArgumentException();
         wn = wordnet;
     }
 
     // given an array of WordNet nouns, return an outcast
     public String outcast(String[] nouns) {
+        if (nouns == null) throw new java.lang.IllegalArgumentException();
+
         HashMap<String, Integer> distSum = new HashMap<>();
         int numWords = nouns.length;
         for (int i = 0; i < numWords; i++) {
             for (int j = i + 1; j < numWords; j++) {
-//                StdOut.println(nouns[i]);
-//                StdOut.println(nouns[j]);
-//                StdOut.println("-----");
+
                 int distance = wn.distance(nouns[i], nouns[j]);
 
                 if (!distSum.containsKey(nouns[i])) distSum.put(nouns[i], distance);
@@ -45,7 +44,17 @@ public class Outcast {
 
 
     public static void main(String[] args) {
-//        WordNet wordnet = new WordNet(args[0], args[1]);
+
+        WordNet wordnet = new WordNet(args[0], args[1]);
+        Outcast outcast = new Outcast(wordnet);
+        for (int t = 2; t < args.length; t++) {
+            In in = new In(args[t]);
+            String[] nouns = in.readAllStrings();
+            StdOut.println(args[t] + ": " + outcast.outcast(nouns));
+        }
+
+        /*
+        // for test
         WordNet wordnet = new WordNet("wordnet/synsets.txt", "wordnet/hypernyms.txt");
         Outcast outcast = new Outcast(wordnet);
         String[] source = {"wordnet/outcast5.txt", "wordnet/outcast8.txt", "wordnet/outcast11.txt"};
@@ -54,5 +63,6 @@ public class Outcast {
             String[] nouns = in.readAllStrings();
             StdOut.println(source[t] + ": " + outcast.outcast(nouns));
         }
+        */
     }
 }
