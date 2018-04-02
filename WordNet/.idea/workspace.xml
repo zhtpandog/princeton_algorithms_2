@@ -15,11 +15,10 @@
       <file leaf-file-name="WordNet.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/WordNet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="63" lean-forward="true" selection-start-line="10" selection-start-column="63" selection-end-line="10" selection-end-column="63" />
+            <state relative-caret-position="208">
+              <caret line="33" column="59" lean-forward="true" selection-start-line="33" selection-start-column="59" selection-end-line="33" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#WordNet#0;class#WordNet#0" />
                 <element signature="method#isNoun#0;class#WordNet#0" />
                 <element signature="method#distance#0;class#WordNet#0" />
                 <element signature="method#sap#0;class#WordNet#0" />
@@ -31,8 +30,8 @@
       <file leaf-file-name="Outcast.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Outcast.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="51" column="49" lean-forward="true" selection-start-line="51" selection-start-column="49" selection-end-line="51" selection-end-column="49" />
+            <state relative-caret-position="438">
+              <caret line="36" column="13" lean-forward="true" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -43,8 +42,8 @@
       <file leaf-file-name="SAP.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SAP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2310">
-              <caret line="154" lean-forward="true" selection-start-line="154" selection-end-line="154" />
+            <state relative-caret-position="532">
+              <caret line="139" column="9" lean-forward="true" selection-start-line="139" selection-start-column="9" selection-end-line="139" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -70,9 +69,8 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="36" />
-    <option name="y" value="23" />
+  <component name="ProjectFrameBounds">
+    <option name="y" value="198" />
     <option name="width" value="1404" />
     <option name="height" value="877" />
   </component>
@@ -208,7 +206,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="36" y="23" width="1404" height="877" extended-state="6" />
+    <frame x="1" y="23" width="1404" height="877" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" />
@@ -249,20 +247,20 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Outcast.java">
+    <entry file="file://$PROJECT_DIR$/src/SAP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="51" column="49" lean-forward="true" selection-start-line="51" selection-start-column="49" selection-end-line="51" selection-end-column="49" />
+        <state relative-caret-position="532">
+          <caret line="139" column="9" lean-forward="true" selection-start-line="139" selection-start-column="9" selection-end-line="139" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SAP.java">
+    <entry file="file://$PROJECT_DIR$/src/Outcast.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2310">
-          <caret line="154" lean-forward="true" selection-start-line="154" selection-end-line="154" />
+        <state relative-caret-position="438">
+          <caret line="36" column="13" lean-forward="true" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -271,11 +269,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/WordNet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="63" lean-forward="true" selection-start-line="10" selection-start-column="63" selection-end-line="10" selection-end-column="63" />
+        <state relative-caret-position="208">
+          <caret line="33" column="59" lean-forward="true" selection-start-line="33" selection-start-column="59" selection-end-line="33" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#WordNet#0;class#WordNet#0" />
             <element signature="method#isNoun#0;class#WordNet#0" />
             <element signature="method#distance#0;class#WordNet#0" />
             <element signature="method#sap#0;class#WordNet#0" />

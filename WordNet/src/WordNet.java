@@ -1,6 +1,7 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Digraph;
 import edu.princeton.cs.algs4.BreadthFirstDirectedPaths;
+import edu.princeton.cs.algs4.DirectedCycle;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,9 +9,9 @@ import java.util.HashMap;
 
 public class WordNet {
 
-    private HashMap<String, ArrayList<Integer>> nounSynsetsMap;
-    private HashMap<Integer, String> nounSynsetsIdMap;
-    private Digraph graph;
+    private final HashMap<String, ArrayList<Integer>> nounSynsetsMap;
+    private final HashMap<Integer, String> nounSynsetsIdMap;
+    private final Digraph graph;
     private BreadthFirstDirectedPaths bfsVIter, bfsWIter;
     private Iterable<Integer> currVIter = null, currWIter = null;
     private int minLengthIter, minAncestorIter;
@@ -59,14 +60,17 @@ public class WordNet {
         }
 
         // validate this is a rooted graph
-        boolean rooted = false;
-        for (int ver = 0; ver < graph.V(); ver++) {
-            if (graph.indegree(ver) == 0) {
-                rooted = true;
-                break;
-            }
-        }
-        if (!rooted) throw new java.lang.IllegalArgumentException();
+        DirectedCycle dc = new DirectedCycle(graph);
+        if (dc.hasCycle()) throw new java.lang.IllegalArgumentException();
+
+//        boolean rooted = false;
+//        for (int ver = 0; ver < graph.V(); ver++) {
+//            if (graph.indegree(ver) == 0) {
+//                rooted = true;
+//                break;
+//            }
+//        }
+//        if (!rooted) throw new java.lang.IllegalArgumentException();
 
     }
 

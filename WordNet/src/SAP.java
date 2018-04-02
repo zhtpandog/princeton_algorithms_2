@@ -6,7 +6,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class SAP {
 
-    private Digraph graph;
+    private final Digraph graph;
     private int minLength, minAncestor;
     private int minLengthIter, minAncestorIter;
     private int currV = -1, currW = -1;
@@ -100,10 +100,10 @@ public class SAP {
     // length of shortest ancestral path between any vertex in v and any vertex in w; -1 if no such path
     public int length(Iterable<Integer> v, Iterable<Integer> w) {
         if (v == null || w == null) throw new java.lang.IllegalArgumentException();
-        for (Integer vertId: v) {
+        for (int vertId: v) {
             if (vertId > graph.V() - 1 || vertId < 0) throw new java.lang.IllegalArgumentException();
         }
-        for (Integer vertId: w) {
+        for (int vertId: w) {
             if (vertId > graph.V() - 1 || vertId < 0) throw new java.lang.IllegalArgumentException();
         }
 
@@ -146,10 +146,10 @@ public class SAP {
     // a common ancestor that participates in shortest ancestral path; -1 if no such path
     public int ancestor(Iterable<Integer> v, Iterable<Integer> w) {
         if (v == null || w == null) throw new java.lang.IllegalArgumentException();
-        for (Integer vertId: v) {
+        for (int vertId: v) {
             if (vertId > graph.V() - 1 || vertId < 0) throw new java.lang.IllegalArgumentException();
         }
-        for (Integer vertId: w) {
+        for (int vertId: w) {
             if (vertId > graph.V() - 1 || vertId < 0) throw new java.lang.IllegalArgumentException();
         }
 

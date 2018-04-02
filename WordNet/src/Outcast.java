@@ -1,10 +1,11 @@
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.In;
 
 import java.util.HashMap;
 
 public class Outcast {
 
-    private WordNet wn;
+    private final WordNet wn;
 
     // constructor takes a WordNet object
     public Outcast(WordNet wordnet) {
@@ -16,27 +17,23 @@ public class Outcast {
     public String outcast(String[] nouns) {
         if (nouns == null) throw new java.lang.IllegalArgumentException();
 
-        HashMap<String, Integer> distSum = new HashMap<>();
+        int[] distSumArr = new int[nouns.length];
+
         int numWords = nouns.length;
         for (int i = 0; i < numWords; i++) {
             for (int j = i + 1; j < numWords; j++) {
-
                 int distance = wn.distance(nouns[i], nouns[j]);
-
-                if (!distSum.containsKey(nouns[i])) distSum.put(nouns[i], distance);
-                else distSum.replace(nouns[i], distSum.get(nouns[i]) + distance);
-
-                if (!distSum.containsKey(nouns[j])) distSum.put(nouns[j], distance);
-                else distSum.replace(nouns[j], distSum.get(nouns[j]) + distance);
+                distSumArr[i] += distance;
+                distSumArr[j] += distance;
             }
         }
 
         int maxDist = 0;
         String result = null;
-        for (HashMap.Entry<String, Integer> entry: distSum.entrySet()) {
-            if (entry.getValue() > maxDist) {
-                maxDist = entry.getValue();
-                result = entry.getKey();
+        for (int i = 0; i < nouns.length; i++) {
+            if (distSumArr[i] > maxDist) {
+                maxDist = distSumArr[i];
+                result = nouns[i];
             }
         }
         return result;
@@ -53,6 +50,7 @@ public class Outcast {
             StdOut.println(args[t] + ": " + outcast.outcast(nouns));
         }
 
+
         /*
         // for test
         WordNet wordnet = new WordNet("wordnet/synsets.txt", "wordnet/hypernyms.txt");
@@ -64,5 +62,6 @@ public class Outcast {
             StdOut.println(source[t] + ": " + outcast.outcast(nouns));
         }
         */
+
     }
 }
