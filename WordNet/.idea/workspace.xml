@@ -12,17 +12,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="WordNet.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="WordNet.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/WordNet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+            <state relative-caret-position="413">
+              <caret line="164" column="81" lean-forward="true" selection-start-line="164" selection-start-column="8" selection-end-line="164" selection-end-column="81" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2747#2748#0" expanded="true" />
-                <element signature="e#2793#2794#0" expanded="true" />
-                <element signature="e#2870#2871#0" expanded="true" />
-                <element signature="e#2925#2926#0" expanded="true" />
+                <element signature="method#WordNet#0;class#WordNet#0" />
+                <element signature="method#distance#0;class#WordNet#0" />
+                <element signature="method#sap#0;class#WordNet#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Outcast.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Outcast.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="42" column="22" lean-forward="true" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#243#244#0" expanded="true" />
+                <element signature="e#271#272#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -31,13 +44,12 @@
       <file leaf-file-name="SAP.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SAP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="47" />
+            <state relative-caret-position="121">
+              <caret line="27" column="59" lean-forward="true" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#311#312#0" expanded="true" />
                 <element signature="e#336#337#0" expanded="true" />
-                <element signature="method#length#0;class#SAP#0" />
                 <element signature="method#ancestor#0;class#SAP#0" />
                 <element signature="method#ancestor#1;class#SAP#0" />
               </folding>
@@ -59,10 +71,11 @@
       <list>
         <option value="$PROJECT_DIR$/src/SAP.java" />
         <option value="$PROJECT_DIR$/src/WordNet.java" />
+        <option value="$PROJECT_DIR$/src/Outcast.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="36" />
     <option name="y" value="23" />
     <option name="width" value="1404" />
@@ -116,7 +129,12 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.WordNet">
+  <component name="RunManager" selected="Application.Outcast">
+    <configuration name="Outcast" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Outcast" />
+      <module name="WordNet" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    </configuration>
     <configuration name="SAP" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="SAP" />
       <module name="WordNet" />
@@ -171,9 +189,11 @@
     <list>
       <item itemvalue="Application.WordNet" />
       <item itemvalue="Application.SAP" />
+      <item itemvalue="Application.Outcast" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Outcast" />
         <item itemvalue="Application.WordNet" />
         <item itemvalue="Application.SAP" />
       </list>
@@ -193,7 +213,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="36" y="23" width="1404" height="877" extended-state="0" />
+    <frame x="36" y="23" width="1404" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" />
@@ -236,13 +256,12 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/SAP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="47" />
+        <state relative-caret-position="121">
+          <caret line="27" column="59" lean-forward="true" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#311#312#0" expanded="true" />
             <element signature="e#336#337#0" expanded="true" />
-            <element signature="method#length#0;class#SAP#0" />
             <element signature="method#ancestor#0;class#SAP#0" />
             <element signature="method#ancestor#1;class#SAP#0" />
           </folding>
@@ -251,14 +270,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/WordNet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="41" lean-forward="true" selection-start-line="41" selection-end-line="41" />
+        <state relative-caret-position="413">
+          <caret line="164" column="81" lean-forward="true" selection-start-line="164" selection-start-column="8" selection-end-line="164" selection-end-column="81" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2747#2748#0" expanded="true" />
-            <element signature="e#2793#2794#0" expanded="true" />
-            <element signature="e#2870#2871#0" expanded="true" />
-            <element signature="e#2925#2926#0" expanded="true" />
+            <element signature="method#WordNet#0;class#WordNet#0" />
+            <element signature="method#distance#0;class#WordNet#0" />
+            <element signature="method#sap#0;class#WordNet#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Outcast.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="42" column="22" lean-forward="true" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#243#244#0" expanded="true" />
+            <element signature="e#271#272#0" expanded="true" />
           </folding>
         </state>
       </provider>

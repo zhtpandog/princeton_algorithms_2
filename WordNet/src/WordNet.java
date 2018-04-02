@@ -59,7 +59,6 @@ public class WordNet {
                 graph.addEdge(i, id);
             }
         }
-
     }
 
     // returns all WordNet nouns
@@ -73,7 +72,7 @@ public class WordNet {
     }
 
     // distance between nounA and nounB (defined below)
-    //  minimum length of any ancestral path between any synset v of A and any synset w of B
+    // minimum length of any ancestral path between any synset v of A and any synset w of B
     public int distance(String nounA, String nounB) {
         // retrieve id list associated with nounA, nounB
         ArrayList<Integer> idListA = nounSynsetsMap.get(nounA);
